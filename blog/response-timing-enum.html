@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Username Enumeration via Response Timing</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-white p-8 font-mono">
+
+    <header class="flex justify-between items-center p-5 mb-10 border-b border-green-800 sticky top-0 z-50 bg-gray-900 backdrop-blur-sm">
+        <a href="../index.html"><h1 class="text-3xl font-bold font-mono text-green-400">>_ M4ZiX:~</h1></a>
+    </header>
+
+  <div class="max-w-4xl mx-auto">
+    <h1 class="text-4xl text-green-400 font-bold mb-6">Username Enumeration via Response Timing</h1>
+    <p class="mb-2 text-sm text-gray-400">Tags: timing, enumeration, x-forwarded-for, burp, authentication</p>
+    <hr class="my-4 border-green-700">
+
+    <section class="mb-10">
+      <h2 class="text-2xl text-green-300 mb-2">🎯 Goal</h2>
+      <p>Find a valid username based on server response times, then brute-force the password.</p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-2xl text-green-300 mb-2">🛠️ Walkthrough</h2>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">1. Explore Login Flow</h3>
+      <p>Tested login with wrong credentials (<code>admin:admin</code>). After 3 failed attempts, login was temporarily blocked — likely rate-limiting based on IP.</p>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">2. Bypass Rate Limiting</h3>
+      <p>To avoid lockouts, added an <code>X-Forwarded-For:</code> header to each request and rotated its value during Intruder attacks. This made each request appear to originate from a different IP.</p>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">3. Focus on Timing</h3>
+      <ul class="list-disc list-inside">
+        <li>If the <strong>username is invalid</strong>, the password is not processed → response is fast.</li>
+        <li>If the <strong>username is valid</strong>, and the password is long or complex → response is slower.</li>
+      </ul>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">4. Attack Setup</h3>
+      <ul class="list-disc list-inside">
+        <li>Set username as the payload position.</li>
+        <li>Added <code>X-Forwarded-For</code> header and incremented it with values from 1 to 101.</li>
+        <li>Set a large password value (1000+ characters) to amplify delay.</li>
+        <li>Ran attack and sorted responses by response time.</li>
+        <li>Identified the valid username from the longest response.</li>
+      </ul>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">5. Brute-Force Password</h3>
+      <ul class="list-disc list-inside">
+        <li>Replaced the username with the discovered one.</li>
+        <li>Set password as payload position, used a password list.</li>
+        <li>Found correct password by noticing a 302 status code and missing error message.</li>
+      </ul>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">6. Log In</h3>
+      <p>Used valid credentials to log in — lab solved successfully ✅</p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-2xl text-yellow-400 mb-2">💡 Lessons Learned</h2>
+      <ul class="list-disc list-inside">
+        <li>Subtle timing analysis can leak internal validation logic.</li>
+        <li>Rate-limiting can be bypassed using IP spoofing headers like <code>X-Forwarded-For</code>.</li>
+        <li>Always observe response behavior when error messages aren’t helpful.</li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>

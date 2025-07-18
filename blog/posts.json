@@ -1,0 +1,37 @@
+[
+  {
+    "title": "Username Enumeration via Different Responses",
+    "slug": "viewer.html?post=username-enum",
+    "description": "Detecting subtle error messages to identify valid usernames and brute-force passwords",
+    "tags": "[BURP SUITE] [ENUMERATION]",
+    "color": "bg-red-500"
+  },
+  {
+    "title": "2FA Simple Bypass",
+    "slug": "viewer.html?post=2fa-bypass",
+    "description": "Bypassing two-factor authentication by skipping verification and exploiting session flow",
+    "tags": "[2FA] [IDOR]",
+    "color": "bg-yellow-500"
+  },
+  {
+    "title": "Password Reset Broken Logic",
+    "slug": "viewer.html?post=reset-logic-flaw",
+    "description": "Resetting another user's password by exploiting token misvalidation",
+    "tags": "[LOGIC FLAW] [BURP]",
+    "color": "bg-blue-500"
+  },
+  {
+    "title": "Username Enumeration via Subtly Different Responses",
+    "slug": "viewer.html?post=subtle-response-enum",
+    "description": "Identifying valid usernames by comparing minor differences in error messages",
+    "tags": "[AUTH] [STRING ANALYSIS]",
+    "color": "bg-green-500"
+  },
+  {
+    "title": "Username Enumeration via Response Timing",
+    "slug": "viewer.html?post=response-timing-enum",
+    "description": "Using response delays to identify valid usernames during login attempts",
+    "tags": "[TIMING] [X-FORWARDED-FOR]",
+    "color": "bg-purple-500"
+  }
+]

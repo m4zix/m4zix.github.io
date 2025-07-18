@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Username Enumeration via Different Responses</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-white p-8 font-mono">
+
+    <header class="flex justify-between items-center p-5 mb-10 border-b border-green-800 sticky top-0 z-50 bg-gray-900 backdrop-blur-sm">
+        <a href="../index.html"><h1 class="text-3xl font-bold font-mono text-green-400">>_ M4ZiX:~</h1></a>
+    </header>
+
+  <div class="max-w-4xl mx-auto">
+    <h1 class="text-4xl text-green-400 font-bold mb-6">Lab Walkthrough – Username Enumeration via Different Responses</h1>
+    <p class="mb-2 text-sm text-gray-400">Tags: username enumeration, error-based, burp, authentication</p>
+    <hr class="my-4 border-green-700">
+
+    <section class="mb-10">
+      <h2 class="text-2xl text-green-300 mb-2">🎯 Lab Goal</h2>
+      <p>Identify a valid username by analyzing differences in server error messages. Then brute-force the password to log in and solve the lab.</p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-2xl text-green-300 mb-2">🛠️ Walkthrough</h2>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">Step 1: Capture the Login Request</h3>
+      <p>I started by submitting some dummy credentials (<code>admin:admin</code>) in the login form. I captured the request using Burp Suite and sent it to Intruder for further testing.</p>
+      <p class="mt-2 italic">The error message returned was:</p>
+      <div class="bg-gray-800 text-sm p-4 rounded border border-green-800 my-2">
+        Invalid username
+      </div>
+      <p>This suggested that the server leaks information depending on whether the username exists or not — a common enumeration vulnerability.</p>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">Step 2: Username Enumeration with Burp Intruder</h3>
+      <p>I configured Burp Intruder to fuzz the username field. I used the username wordlist provided by the lab and kept the password static.</p>
+      <p>To detect differences in server responses, I went to <code>Grep - Match</code> and added <strong>Invalid username</strong> as a match string. This allowed me to filter and compare results more effectively.</p>
+      <p>After running the attack, I sorted the responses by the <strong>Grep Match</strong> column and noticed that one request didn’t return the usual error message. This indicated that the username was valid.</p>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">Step 3: Brute-Forcing the Password</h3>
+      <p>With the valid username identified, I changed the Intruder position to target the password field. I kept the username fixed and used a password wordlist.</p>
+      <p>Before launching the attack, I tested manually with an incorrect password to observe the new error message. It said:</p>
+      <div class="bg-gray-800 text-sm p-4 rounded border border-yellow-700 my-2">
+        Incorrect password
+      </div>
+      <p>I updated the <code>Grep - Match</code> filter to search for that string and ran the attack again.</p>
+      <p>Eventually, one request stood out — it returned a different <strong>status code</strong> and <strong>response length</strong>, indicating a successful login.</p>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">Step 4: Logging In</h3>
+      <p>I used the discovered credentials to log in and access the <strong>My Account</strong> page. This confirmed that the lab was successfully solved ✅</p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-2xl text-yellow-400 mb-2">💡 Final Thoughts</h2>
+      <p>This lab demonstrates how small differences in error messages can expose sensitive information like valid usernames. It reinforces the importance of uniform error handling in authentication logic.</p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-2xl text-gray-300 mb-2">📌 Note</h2>
+      <p>This was the first PortSwigger lab I’ve completed as part of my penetration testing learning journey. I'm still getting familiar with tools like Burp Suite and learning how to identify common web application vulnerabilities.</p>
+    </section>
+  </div>
+</body>
+</html>
