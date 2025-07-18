@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M4ZiX - Cybersecurity Specialist</title>
+    <link rel="icon" type="image/png" href="/assets/logo.jpg">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-900 text-white">
+    <header class="flex justify-between items-center p-5 border-b border-green-800 sticky top-0 z-50 bg-gray-900 backdrop-blur-sm">
+        <a href="../index.html"><h1 class="text-3xl font-bold font-mono text-green-400">>_ M4ZiX:~</h1></a>
+    </header>
+
+
+    <section id="blog" class="p-10 bg-gray-800">
+        <h2 class="text-3xl mb-5 font-mono text-green-400">$ ./blog</h2>
+        <p class="mb-6">Write-ups and walkthroughs of PortSwigger labs and real-world exploits.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <a href="blog/post1.html" class="bg-gray-900 p-6 rounded-lg border border-green-800 hover:border-green-500 transition-all block">
+                <div class="flex items-center mb-3">
+                    <div class="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>
+                    <h3 class="text-xl font-mono">PortSwigger Lab: SQL Injection</h3>
+                </div>
+                <p class="text-gray-300">Step-by-step exploitation of blind SQLi vulnerability.</p>
+                <div class="mt-3 text-xs text-green-400">[SQLMAP] [BURP SUITE]</div>
+            </a>
+             <a href="blog/post1.html" class="bg-gray-900 p-6 rounded-lg border border-green-800 hover:border-green-500 transition-all block">
+                <div class="flex items-center mb-3">
+                    <div class="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>
+                    <h3 class="text-xl font-mono">PortSwigger Lab: SQL Injection</h3>
+                </div>
+                <p class="text-gray-300">Step-by-step exploitation of blind SQLi vulnerability.</p>
+                <div class="mt-3 text-xs text-green-400">[SQLMAP] [BURP SUITE]</div>
+            </a>
+        </div>
+        <br>
+    </section>
+
+
+    <footer class="p-5 text-center">
+        <p>&copy; 2023 M4ZiX. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Function to load blog posts dynamically
+        function loadBlogPosts() {
+            fetch('/blog/posts.json')
+                .then(response => response.json())
+                .then(posts => {
+                    const blogContainer = document.querySelector('#blog .grid');
+                    blogContainer.innerHTML = '';
+                    
+                    posts.forEach(post => {
+                        blogContainer.innerHTML += `
+                        <a href="/blog/${post.slug}" class="bg-gray-900 p-6 rounded-lg border border-green-800 hover:border-green-500 transition-all block">
+                            <div class="flex items-center mb-3">
+                                <div class="w-2 h-2 rounded-full ${post.color || 'bg-blue-500'} mr-2"></div>
+                                <h3 class="text-xl font-mono">${post.title}</h3>
+                            </div>
+                            <p class="text-gray-300">${post.description}</p>
+                            <div class="mt-3 text-xs text-green-400">${post.tags}</div>
+                        </a>
+                        `;
+                    });
+                });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadBlogPosts();
+        });
+
+
+        // Back to top button functionality
+        const backToTopButton = document.getElementById("backToTop");
+        window.onscroll = function() {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                backToTopButton.classList.remove("hidden");
+            } else {
+                backToTopButton.classList.add("hidden");
+            }
+        };
+
+        backToTopButton.addEventListener("click", function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
