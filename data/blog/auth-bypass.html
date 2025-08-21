@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Authentication Bypass Labs</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="bg-gray-900 text-white p-8 font-mono">
+
+  <header class="flex justify-between items-center p-5 mb-10 border-b border-green-800 sticky top-0 z-50 bg-gray-900 backdrop-blur-sm">
+    <a href="../../index.html"><h1 class="text-3xl font-bold font-mono text-green-400">>_ M4ZiX:~</h1></a>
+  </header>
+
+  <div class="max-w-4xl mx-auto">
+
+    <h1 class="text-4xl text-green-400 font-bold mb-6">PortSwigger Authentication Bypass Labs</h1>
+    <p class="mb-2 text-sm text-gray-400">Tags: Authentication, JWT, OAuth, HTTP Methods, Web Security</p>
+    <hr class="my-4 border-green-700">
+
+    <section class="mb-10">
+      <h2 class="text-2xl text-green-300 mb-4">Lab: Authentication bypass via OAuth implicit flow</h2>
+      <p>
+        The lab provides the target email: <code>carlos@carlos-montoya.net</code>. While attempting to sign in with our credentials ("wiener"), we intercepted a GET request that returned JSON data about the user (email, username, token).<br><br>
+        We replaced our email in the response with Carlos's email and submitted it — gaining full access to his account.
+      </p>
+      <div class="bg-gray-800 text-sm p-4 rounded border border-green-800 my-4">
+        ⚠️ The issue lies in the fact that the server does not validate if the access token belongs to the email provided. This is a classic example of broken authentication logic in OAuth implicit flow.
+      </div>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-2xl text-green-300 mb-4">Lab: JWT authentication bypass via unverified signature</h2>
+      <p>
+        The lab mentions the server does not verify JWT signatures. We log in as "wiener" then edit the JWT using the JSON Web Token extension. Replace the username with "administrator", send the request — we now have access to the admin panel and can delete Carlos.
+      </p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-2xl text-green-300 mb-4">Lab: JWT authentication bypass via weak signing key</h2>
+      <p>
+        The server uses a weak secret key. After logging in, we brute-force the JWT to retrieve the key:
+      </p>
+      <div class="bg-gray-800 text-sm p-4 rounded border border-green-800 my-4">
+        hashcat -a 0 -m 16500 &lt;JWT&gt; &lt;wordlist&gt;
+      </div>
+      <p class="mt-2">Once we obtain the secret key, we re-sign the token as administrator using JWT Editor. After sending the modified token, we gain admin access and delete Carlos.</p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-2xl text-green-300 mb-4">Lab: JWT authentication bypass via algorithm confusion</h2>
+      <p>
+        Understanding the vulnerability:
+      </p>
+      <ul class="list-disc list-inside text-sm text-gray-300">
+        <li><strong>RS256</strong> uses asymmetric keys (public/private).</li>
+        <li><strong>HS256</strong> uses symmetric keys (one key).</li>
+        <li>The server accepts HS256 and uses the public key as the HMAC secret — which is insecure.</li>
+      </ul>
+      <p class="mt-4">Steps:</p>
+      <ol class="list-decimal list-inside text-sm text-gray-300">
+        <li>Fetch the public key from <code>jwks.json</code>.</li>
+        <li>Convert to PEM and Base64 via JWT Editor.</li>
+        <li>Create symmetric key from Base64-decoded PEM key.</li>
+        <li>Modify JWT header to use <code>HS256</code>, edit payload to use <code>administrator</code>.</li>
+        <li>Sign with new symmetric key and send the token — you're now admin. Delete Carlos.</li>
+      </ol>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-2xl text-green-300 mb-4">Lab: Method-based access control can be circumvented</h2>
+      <p>
+        Admin credentials reveal the upgrade user role request. Log in as "wiener", capture the same request.
+        When replayed with "wiener's" session, the server returns unauthorized.
+        <br><br>
+        Right-click the request and choose <em>Change request method</em> → <code>GET</code>.
+        Re-send — it works. Access control was only enforced on <code>POST</code>, not <code>GET</code>.
+      </p>
+    </section>
+
+  </div>
+
+</body>
+</html>

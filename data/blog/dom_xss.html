@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOM XSS in document.write using location.search</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="bg-gray-900 text-white p-8 font-mono">
+
+  <header class="flex justify-between items-center p-5 mb-10 border-b border-green-800 sticky top-0 z-50 bg-gray-900 backdrop-blur-sm">
+    <a href="../../index.html"><h1 class="text-3xl font-bold font-mono text-green-400">>_ M4ZiX:~</h1></a>
+  </header>
+
+  <div class="max-w-4xl mx-auto">
+    <h1 class="text-4xl text-green-400 font-bold mb-6">DOM XSS in <code>document.write</code> using <code>location.search</code></h1>
+    <p class="mb-2 text-sm text-gray-400">Tags: XSS, DOM, document.write, location.search, client-side</p>
+    <hr class="my-4 border-green-700">
+
+    <section class="mb-10">
+      <h2 class="text-2xl text-green-300 mb-2">🎯 Goal</h2>
+      <p>Exploit a DOM-based XSS vulnerability caused by unsafe usage of <code>document.write</code> with <code>location.search</code> inside a <code>&lt;select&gt;</code> element.</p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-2xl text-green-300 mb-2">🛠️ Walkthrough</h2>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">1. Analyze Functionality</h3>
+      <p>The stock checker feature builds a <code>&lt;select&gt;</code> dropdown using the <code>storeId</code> parameter from the URL. The value is directly written using <code>document.write</code>, making it controllable.</p>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">2. Observation</h3>
+      <p>If we pass a custom <code>storeId</code> value in the query string, it appears inside the <code>&lt;select&gt;</code> tag. Example:</p>
+      <pre class="bg-black text-green-400 p-3 rounded-lg overflow-x-auto">?storeId=test</pre>
+      <p>This results in:</p>
+      <pre class="bg-black text-green-400 p-3 rounded-lg overflow-x-auto">&lt;select&gt;&lt;option&gt;test&lt;/option&gt;&lt;/select&gt;</pre>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">3. Crafting the Payload</h3>
+      <p>We can break out of the attribute, close the <code>&lt;select&gt;</code> tag, and inject malicious HTML/JS. For example:</p>
+      <pre class="bg-black text-green-400 p-3 rounded-lg overflow-x-auto">
+storeId=">&lt;/select&gt;&lt;img src=0 onerror=alert('m4zix')&gt;
+      </pre>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">4. Execution</h3>
+      <p>When loading the page with the payload, the <code>&lt;img&gt;</code> tag is rendered and the <code>onerror</code> event fires, executing our JavaScript payload:</p>
+      <pre class="bg-black text-green-400 p-3 rounded-lg overflow-x-auto">alert('m4zix')</pre>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">5. Lab Solved</h3>
+      <p>The alert box popped up successfully ✅ DOM-based XSS confirmed.</p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-2xl text-yellow-400 mb-2">💡 Lessons Learned</h2>
+      <ul class="list-disc list-inside">
+        <li><code>document.write</code> is dangerous when writing user-controlled input.</li>
+        <li>Always sanitize and escape data before inserting it into the DOM.</li>
+        <li>Prefer using safe DOM APIs (<code>textContent</code>, <code>createElement</code>) over string concatenation.</li>
+        <li>Client-side code can be just as vulnerable as server-side code.</li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>

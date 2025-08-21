@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password Reset Broken Logic</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="bg-gray-900 text-white p-8 font-mono">
+      <header class="flex justify-between items-center p-5 mb-10 border-b border-green-800 sticky top-0 z-50 bg-gray-900 backdrop-blur-sm">
+        <a href="../../index.html"><h1 class="text-3xl font-bold font-mono text-green-400">>_ M4ZiX:~</h1></a>
+    </header>
+
+  <div class="max-w-4xl mx-auto">
+    <h1 class="text-4xl text-green-400 font-bold mb-6">Password Reset Broken Logic</h1>
+    <p class="mb-2 text-sm text-gray-400">Tags: password reset, broken logic, authorization bypass</p>
+    <hr class="my-4 border-green-700">
+
+    <section class="mb-10">
+      <h2 class="text-2xl text-green-300 mb-2">🎯 Lab Goal</h2>
+      <p>Reset Carlos's password by exploiting flawed password reset logic and gain access to his account.</p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-2xl text-green-300 mb-2">🛠️ Walkthrough</h2>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">Step 1: Test Password Reset</h3>
+      <p>I attempted to reset the password for my own user: <code>wiener:peter</code>. The site sent a password reset link to the email inbox. The URL had the following structure:</p>
+      <div class="bg-gray-800 text-sm p-4 rounded border border-green-800 my-2">
+        /forgot-password?temp-forgot-password-token=xyz123
+      </div>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">Step 2: Submit New Password</h3>
+      <p>I followed the link and submitted a new password. The POST request included two token parameters:</p>
+      <ul class="list-disc list-inside">
+        <li>One token in the URL</li>
+        <li>One token in the form body</li>
+      </ul>
+      <p>I guessed that the backend might simply compare these two values instead of validating them server-side.</p>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">Step 3: Exploit the Logic</h3>
+      <p>To test the theory, I modified both token values to be the same static string. Then I changed the username from <code>wiener</code> to <code>carlos</code> and submitted the form.</p>
+      <p>It worked! The application didn't verify the token's ownership. It just checked that both token values matched.</p>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">Step 4: Log In</h3>
+      <p>After resetting Carlos's password, I logged in using the new credentials. Success — the lab was solved ✅</p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-2xl text-yellow-400 mb-2">💡 Lessons Learned</h2>
+      <ul class="list-disc list-inside">
+        <li>Never trust user-supplied tokens — validate them server-side against a secure session store.</li>
+        <li>Use time-limited, single-use tokens bound to the user's session/email.</li>
+        <li>Broken logic bugs are subtle but powerful attack vectors in authentication flows.</li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>

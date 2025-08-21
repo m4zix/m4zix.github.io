@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blind SQLi - Time Delays</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="bg-gray-900 text-white p-8 font-mono">
+
+  <header class="flex justify-between items-center p-5 mb-10 border-b border-green-800 sticky top-0 z-50 bg-gray-900 backdrop-blur-sm">
+    <a href="../../index.html"><h1 class="text-3xl font-bold font-mono text-green-400">>_ M4ZiX:~</h1></a>
+  </header>
+
+  <div class="max-w-4xl mx-auto">
+    <h1 class="text-4xl text-green-400 font-bold mb-6">Blind SQL Injection - Time Delays</h1>
+    <p class="mb-2 text-sm text-gray-400">Tags: SQLi, Blind, Time-Based</p>
+    <hr class="my-4 border-green-700">
+
+    <section class="mb-10">
+      <h2 class="text-2xl text-green-300 mb-2">🎯 Goal</h2>
+      <p>Exploit a blind SQL injection by leveraging <code>pg_sleep()</code> to confirm and enumerate the database when no direct output is returned.</p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-2xl text-green-300 mb-2">🛠️ Walkthrough</h2>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">1. Identify Injection Point</h3>
+      <p>The tracking cookie parameter is being processed in the backend SQL query. Modifying its value triggers SQL execution.</p>
+
+      <pre class="bg-black text-green-400 p-4 rounded-lg overflow-x-auto"><code>Cookie: TrackingId=xyz123</code></pre>
+
+      <p>After tampering with the cookie, the app didn’t show errors or different responses. → Potential blind SQL injection.</p>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">2. Test with Time Delay</h3>
+      <p>Injected a payload to force the database to sleep before responding:</p>
+
+      <pre class="bg-black text-green-400 p-4 rounded-lg overflow-x-auto"><code>Cookie: TrackingId=xyz123'||pg_sleep(10)--</code></pre>
+
+      <p>⏳ Response delayed by 10 seconds → Confirmed time-based SQL injection.</p>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">3. Next Steps</h3>
+      <p>Once confirmed, time-based blind injection can be used to extract data bit by bit, such as:</p>
+      <ul class="list-disc list-inside text-green-400">
+        <li>Check conditions with <code>CASE WHEN</code></li>
+        <li>Extract version: <code>|| (SELECT CASE WHEN (substring(version(),1,1)='1') THEN pg_sleep(5) ELSE '' END)--</code></li>
+        <li>Enumerate schema and extract sensitive data</li>
+      </ul>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-2xl text-yellow-400 mb-2">💡 Lessons Learned</h2>
+      <ul class="list-disc list-inside">
+        <li>Blind SQLi does not return errors or data directly, but response timing can reveal database behavior.</li>
+        <li><code>pg_sleep()</code> (PostgreSQL), <code>SLEEP()</code> (MySQL), and <code>WAITFOR DELAY</code> (MSSQL) are commonly used for time-based exploitation.</li>
+        <li>Always test cookies, headers, and hidden parameters — not just URL query strings.</li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>

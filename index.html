@@ -29,7 +29,7 @@
     <meta property="twitter:image" content="https://m4zix.github.io/assets/logo.png">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" href="./assets/icon.png">
 
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -51,8 +51,9 @@
     <ul class="flex space-x-6">
       <li><a href="#home" class="hover:text-green-400 font-mono text-sm">$ ./home</a></li>
       <li><a href="#about" class="hover:text-green-400 font-mono text-sm">$ ./about_me</a></li>
+      <li><a href="#profile" class="hover:text-green-400 font-mono text-sm">$ ./profile</a></li>
+      <li><a href="#certifications" class="hover:text-green-400 font-mono text-sm">$ ./certifications</a></li>
       <li><a href="#blog" class="hover:text-green-400 font-mono text-sm">$ ./blog</a></li>
-      <!-- <li><a href="#certifications" class="hover:text-green-400 font-mono text-sm">$ ./certifications</a></li> -->
       <li><a href="#contact" class="hover:text-green-400 font-mono text-sm">$ ./contact</a></li>
     </ul>
   </nav>
@@ -63,8 +64,9 @@
   <ul class="flex flex-col space-y-3">
     <li><a href="#home" class="hover:text-green-400 font-mono text-sm">$ ./home</a></li>
     <li><a href="#about" class="hover:text-green-400 font-mono text-sm">$ ./about_me</a></li>
+    <li><a href="#profile" class="hover:text-green-400 font-mono text-sm">$ ./profile</a></li>
+    <li><a href="#certifications" class="hover:text-green-400 font-mono text-sm">$ ./certifications</a></li>
     <li><a href="#blog" class="hover:text-green-400 font-mono text-sm">$ ./blog</a></li>
-    <!-- <li><a href="#certifications" class="hover:text-green-400 font-mono text-sm">$ ./certifications</a></li> -->
     <li><a href="#contact" class="hover:text-green-400 font-mono text-sm">$ ./contact</a></li>
   </ul>
 </div>
@@ -83,13 +85,13 @@
                             <p class="text-sm text-gray-300">[!] SYSTEM SECURITY ACTIVE</p>
                         </div>
                     </div>
-<!--                     <div class="mt-6">
-                        <a href="/assets/resume.pdf" download class="bg-green-700 px-4 py-2 rounded hover:bg-green-600 transition">Download My Resume</a>
-                    </div> -->
+                    <div class="mt-6">
+                        <a href="./assets/resume.pdf" download class="bg-green-700 px-4 py-2 rounded hover:bg-green-600 transition">Download My Resume</a>
+                    </div>
                 </div>
             </div>
             <div class="md:w-1/4 ml-auto flex justify-center p-6">
-                <img src="/assets/whiteBackground.png"
+                <img src="./assets/whiteBackground.png"
                     alt="Cybersecurity specialist profile"
                     class="rounded-lg border-2 border-green-500 w-full max-w-lg object-cover">
             </div>
@@ -97,7 +99,7 @@
     </section>
 
 <div id="about" class="bg-gray-800 mx-5 p-6 rounded-lg border border-green-700">
-  <h2 class="text-3xl font-bold text-green-400 mb-4">About Me</h2>
+   <h2 class="text-3xl mb-5 font-mono text-green-400">$ ./about_me</h2>
 
   <p class="mb-4">
     A passionate and curious self-taught programmer from <span class="text-yellow-400">Egypt</span> with over <strong>4 years</strong> of learning in the tech world, especially in <span class="text-red-400">Cybersecurity</span>.
@@ -140,22 +142,170 @@
 </div>
 <br><br>
 
-    <!-- <section id="certifications" class="p-10 bg-gray-800">
+<section id="profile" class="mx-5 rounded-lg border border-green-700 p-10 bg-gray-800 overflow-hidden">
+    <h2 class="text-3xl mb-5 font-mono text-green-400">$ ./profile</h2>
+
+    <!-- Tabs -->
+    <div class="flex space-x-2 mb-6 text-white">
+        <button id="education-tab-btn" onclick="showTab('education')" class="profile-tab-btn bg-green-700 bg-gray-700 px-4 py-2 rounded font-mono hover:bg-green-600 transition">Education</button>
+        <button id="experience-tab-btn" onclick="showTab('experience')" class="profile-tab-btn bg-gray-700 px-4 py-2 rounded font-mono hover:bg-green-600 transition">Experience</button>
+        <button id="skills-tab-btn" onclick="showTab('skills')" class="profile-tab-btn bg-gray-700 px-4 py-2 rounded font-mono hover:bg-green-600 transition">Skills</button>
+    </div>
+
+    <!-- Tab Content -->
+    <div id="tab-content" class="bg-gray-900 p-6 rounded-lg border border-green-700 font-mono text-green-400 space-y-2">
+        <div id="education" class="tab-panel opacity-0 hidden transition-opacity duration-500 pt-2 active">
+            <p><span class="text-green-500">m4zix@kali</span>:<span class="text-blue-400">~/profile</span>$ cat education.txt</p>
+            <div>
+                <p>======================</p>
+                <div class="flex justify-between">
+                    <div>
+                        <p class="font-bold text-lg">Technical Diploma of Information Technology</h2>
+                        <p>I-TECH School for Applied Technology (IBM P-TECH Model)</p>
+                    </div>
+                    <div class="px-6">
+                        <p>09/2021 - Present</p>
+                        <p>Cairo, Egypt</p>
+                    </div>
+                </div>
+                <ul class="list-disc list-inside">
+                    <li>Practice-based curriculum with 75% hands-on labs and technical training</li>
+                    <li>Gained skills in programming (Python, Java, Dart), Linux, networking, databases, web/mobile development, and AI</li>
+                </ul>
+                <br>
+            </div>
+            <div>
+                <div class="flex justify-between">
+                    <div>
+                        <p class="font-bold text-lg">Penetration Testing and Vulnerability Analysis</p>
+                        <p>Digital Egyptian Pioneer Initiative ( DEPI )</p>
+                    </div>
+                    <div class="px-6">
+                        <p>06/2025 - Present</p>
+                        <p>Online</p>
+                    </div>
+                </div>
+                <ul class="list-disc list-inside">
+                    <li>Focused on real-world exploitation through lab-based vulnerability analysis</li>
+                </ul>
+                <p>======================</p>
+            </div>
+        </div>
+
+        <div id="experience" class="tab-panel opacity-0 hidden transition-opacity duration-500">
+            <p><span class="text-green-500">m4zix@kali</span>:<span class="text-blue-400">~/profile</span>$ cat experience.txt</p>
+            <div>
+                <p>======================</p>
+                <div class="flex justify-between">
+                    <div>
+                        <p class="font-bold text-lg">Penetration Testing and Vulnerability Analysis</p>
+                        <p>Digital Egyptian Pioneers Intitative ( DEPI )</p>
+                    </div>
+                    <div class="px-6">
+                        <p>06/2025 - Present</p>
+                        <p>Online</p>
+                    </div>
+                </div>
+                <ul class="list-disc list-inside">
+                    <li>Performed hands-on penetration testing through labs simulating real-world vulnerabilities</li>
+                    <li>Focused on SQLi, XSS, CSRF, command injection, and authentication bypass</li>
+                    <li>Used Burp Suite, FFUF, Nmap, Metasploit, sqlmap, BeEF, Gobuster, and cURL</li>
+                    <li>Practiced full testing lifecycle: reconnaissance, exploitation, and reporting</li>
+                </ul>
+                <br>
+            </div>
+            <div>
+                <div class="flex justify-between">
+                    <div>
+                        <p class="font-bold text-lg">Technical Trainee – Applied Technology Program (IBM P-TECH Model)</p>
+                        <p>I-TECH School</p>
+                    </div>
+                    <div class="px-6">
+                        <p>09/2021 - Present</p>
+                        <p>Cairo, Egypt</p>
+                    </div>
+                </div>
+                <ul class="list-disc list-inside">
+                    <li>Completed 75%+ of training through practical labs and real-world IT projects</li>
+                    <li>Developed apps and tools using Python, Java, Dart, MySQL, and Linux</li>
+                    <li>Gained exposure to AI, ML, data analysis, networking, and operating systems</li>
+                    <li>Trained in communication, collaboration, and career readiness via IBM partnership</li>
+                </ul>
+                <br>
+            </div>
+            <div>
+                <div class="flex justify-between">
+                    <div>
+                        <p class="font-bold text-lg">Flutter Developer Intern</p>
+                        <p>IBM</p>
+                    </div>
+                    <div class="px-6">
+                        <p>08/2024 - 09/2024</p>
+                        <p>Cairo, Egypt</p>
+                    </div>
+                </div>
+                <ul class="list-disc list-inside">
+                    <li>Built a mobile banking app using Flutter and integrated APIs</li>
+                    <li>Designed and implemented UI components and back-end communication</li>
+                    <li>Took this role to deepen understanding of mobile app security and development</li>
+                </ul>
+                <p>======================</p>
+            </div>
+        </div>
+
+        <div id="skills" class="tab-panel opacity-0 hidden transition-opacity duration-500">
+            <p><span class="text-green-500">m4zix@kali</span>:<span class="text-blue-400">~/profile</span>$ cat skills.txt</p>
+            <p>======================</p>
+            <div>
+                <p class="font-bold text-lg">Programming:</p>
+                <p class="pl-5">Python, JavaScript, Java, Dart, PHP, C++, Bash</p>
+            </div>
+            <br>
+            <div>
+                <p class="font-bold">Web Development:</p>
+                <p class="pl-5">HTML, CSS, JavaScript, MySQL, OOP</p>
+            </div>
+            <br>
+            <div>
+                <p class="font-bold text-lg">Security Tools:</p>
+                <p class="pl-5">Burp Suite, FFUF, Nmap, Metasploit, sqlmap, BeEF, Gobuster, Wireshark, and cURL</p>
+            </div>
+            <br>
+            <div>
+                <p class="font-bold text-lg">Other:</p>
+                <p class="pl-5">Linux, Data Structures, Algorithms, Networking</p>
+            </div>
+            <p>======================</p>
+        </div>
+    </div>
+</section>
+<br><br>
+
+    <section id="certifications" class="mx-5 rounded-lg border border-green-700 p-10 bg-gray-800 overflow-hidden">
         <h2 class="text-3xl mb-5 font-mono text-green-400">$ ./certifications</h2>
-        <ul class="list-disc list-inside mb-4">
-            <li>Certified Ethical Hacker (CEH)</li>
-            <li>Offensive Security Certified Professional (OSCP)</li>
-            <li>CompTIA Security+</li>
-        </ul>
-        <a href="#more-certifications" class="bg-blue-500 px-4 py-2 rounded hover:bg-blue-400">See More</a>
-    </section> -->
+        <div id="certificates-carousel" class="flex space-x-4 overflow-x-auto snap-x snap-mandatory pb-4">
+            <!-- Dynamic cards will be inserted here -->
+        </div>
+        <div class="text-center mt-6">
+            <a href="./pages/certificates.html" class="bg-green-700 px-4 py-2 rounded hover:bg-green-600">View All Certificates</a>
+        </div>
+    </section>
 
 
-    <section id="blog" class="mx-5 rounded-lg border border-green-700 p-10 bg-gray-800">
+<br><br>
+
+    <section id="blog" class="mx-5 font-mono rounded-lg border border-green-700 p-10 bg-gray-800">
         <h2 class="text-3xl mb-5 font-mono text-green-400">$ ./blog</h2>
-        <p class="mb-6">Write-ups and walkthroughs of PortSwigger labs and real-world exploits.</p>
+        <p class="mb-6">Write-ups, Cheat Sheets and walkthroughs of labs and real-world exploits.</p>
+        <div class="flex flex-wrap gap-2 mb-6">
+            <button class="tab-btn px-4 py-2 hover:bg-green-600 rounded-lg bg-gray-700 bg-green-800 text-white" data-category="all">All</button>
+            <button class="tab-btn px-4 py-2 hover:bg-green-600 rounded-lg bg-gray-700 text-white" data-category="writeups">Writeups</button>
+            <button class="tab-btn px-4 py-2 hover:bg-green-600 rounded-lg bg-gray-700 text-white" data-category="labs">Labs</button>
+            <button class="tab-btn px-4 py-2 hover:bg-green-600 rounded-lg bg-gray-700 text-white" data-category="cheatsheets">Cheatsheets</button>
+            <button class="tab-btn px-4 py-2 hover:bg-green-600 rounded-lg bg-gray-700 text-white" data-category="other">Other</button>
+        </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <a href="blog/post1.html" class="bg-gray-900 p-6 rounded-lg border border-green-800 hover:border-green-500 transition-all block">
+            <a href="blog/post1.html" class="bg-gray-900 p-6 rounded-lg border border-green-800 hover:border-green-500 block">
                 <div class="flex items-center mb-3">
                     <div class="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>
                     <h3 class="text-xl font-mono">PortSwigger Lab: SQL Injection</h3>
@@ -165,24 +315,26 @@
             </a>
         </div>
         <br>
-        <a href="/pages/blog_posts.html" class="bg-green-800 px-4 py-2 rounded hover:bg-green-700 mt-4">See More</a>
+        <div class="text-center mt-6">
+            <a href="./pages/blog_posts.html" class="bg-green-700 px-4 py-2 rounded hover:bg-green-600">See More</a>
+        </div>
     </section>
 
 <section id="contact" class="p-10 text-green-400 font-mono">
   <div class="max-w-6xl mx-auto border border-green-700 rounded-lg bg-gray-900 shadow-lg overflow-hidden">
 
     <!-- Terminal Header -->
-    <div class="bg-gray-800 p-3 border-b border-green-700 flex justify-between items-center text-sm">
-      <span class="text-red-500">●</span>
-      <span class="text-yellow-500">●</span>
-      <span class="text-green-500">●</span>
+    <div class="bg-gray-800 p-3 border-b border-green-700 flex  items-center text-sm">
+        <span class="w-3 h-3 bg-red-500 rounded-full mr-2"></span>
+        <span class="w-3 h-3 bg-yellow-500 rounded-full mr-2"></span>
+        <span class="w-3 h-3 bg-green-500 rounded-full mr-4"></span>
     </div>
 
     <!-- Terminal Body -->
     <div class="p-6 whitespace-pre-wrap bg-black bg-opacity-50 text-green-300 text-sm">
 
 <pre class="text-green-400 text-xs mb-4">
-             ...
+               ...
              ;::::;
            ;::::; :;
          ;:::::'   :;
@@ -200,14 +352,14 @@
  : ::::::: ;:::::: ;::::::#/               DOO
  ::: ::::::: ;; ;:::::::::##                OO
  :::: ::::::: ;::::::::;:::#                OO
- ::::: ::::::::::::;' :;::#                O
+ ::::: ::::::::::::;' :;::#                 O
    ::::: ::::::::;  /  /  :#
    :::::: :::::;   /  /    #
 
          M 4 Z i X 
 </pre>
 
-<span class="text-green-500">user@kali</span>:<span class="text-blue-400">~/contact</span>$ contact --show
+<span class="text-green-500">m4zix@kali</span>:<span class="text-blue-400">~/contact</span>$ contact --show
 =====================================
 📧 Email: <a href="mailto:mazen0ahmed0mohamed@gmail.com" class="underline text-blue-400 hover:text-blue-300">mazen0ahmed0mohamed@gmail.com</a>
 🐦 Twitter: <a href="https://twitter.com/MazenAhm3d" class="underline text-blue-400 hover:text-blue-300">@MazenAhm3d</a>
@@ -217,9 +369,8 @@
 🐙 GitHub: <a href="https://github.com/m4zix" class="underline text-blue-400 hover:text-blue-300">github.com/m4zix</a>
 =====================================
 
-<span class="text-green-500">user@kali</span>:<span class="text-blue-400">~/contact</span>$ _
-    </div>
-  </div>
+<span class="text-green-500">m4zix@kali</span>:<span class="text-blue-400">~/contact</span>$ _
+    </div></div>
 </section>
 
     <button id="backToTop" class="fixed bottom-5 right-5 bg-green-500 p-3 rounded-full hidden">↑</button>
@@ -228,109 +379,14 @@
         <p>&copy; 2025 M4ZiX. All rights reserved.</p>
     </footer>
 
-    <script>
-        // Function to load blog posts dynamically
-        function loadBlogPosts() {
-            fetch('/blog/posts.json')
-                .then(response => response.json())
-                .then(posts => {
-                    const blogContainer = document.querySelector('#blog .grid');
-                    blogContainer.innerHTML = '';
+    <script src="main.js"></script>
 
-            // Reverse array and slice last 5 posts
-            const latestPosts = posts.slice().reverse().slice(0, 4);
-
-            latestPosts.forEach(post => {
-                blogContainer.innerHTML += `
-                    <a href="/blog/${post.slug}" class="bg-gray-900 p-6 rounded-lg border border-green-800 hover:border-green-500 transition-all block">
-                        <div class="flex items-center mb-3">
-                            <div class="w-2 h-2 rounded-full ${post.color || 'bg-blue-500'} mr-2"></div>
-                            <h3 class="text-xl font-mono">${post.title}</h3>
-                        </div>
-                        <p class="text-gray-300">${post.description}</p>
-                        <div class="mt-3 text-xs text-green-400">${post.tags}</div>
-                    </a>
-                `;
-            });
-        });
-}
-
-
-        document.addEventListener('DOMContentLoaded', function() {
-            loadBlogPosts();
-            // Typing animation for name
-            const nameElement = document.getElementById('name');
-            const titleElement = document.getElementById('title');
-            
-            const nameText = ">_ Mazen Ahmed";
-            const titles = ["Ethical Hacker", "Penetration Tester", "Cybersecurity Specialist", "CTF Fighter", "Learning Enthusiast", "Bug Hunter"];
-            let titleIndex = 0;
-            let nameIndex = 0;
-            
-            function typeName() {
-                if (nameIndex < nameText.length) {
-                    nameElement.textContent += nameText.charAt(nameIndex);
-                    nameIndex++;
-                    setTimeout(typeName, 100);
-                } else {
-                    setTimeout(typeTitle, 500);
-                }
-            }
-            
-            function typeTitle() {
-                titleElement.textContent = "";
-                let titleText = titles[titleIndex];
-                let titleCharIndex = 0;
-
-                function typeTitleChars() {
-                    if (titleCharIndex < titleText.length) {
-                        titleElement.textContent += titleText.charAt(titleCharIndex);
-                        titleCharIndex++;
-                        setTimeout(typeTitleChars, 100);
-                    } else {
-                        titleIndex = (titleIndex + 1) % titles.length;
-                        setTimeout(typeTitle, 2000); // Wait before typing the next title
-                    }
-                }
-                typeTitleChars();
-            }
-            
-            setTimeout(typeName, 500);
-        });
-
-        // Smooth scroll for navigation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // Back to top button functionality
-        const backToTopButton = document.getElementById("backToTop");
-        window.onscroll = function() {
-            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-                backToTopButton.classList.remove("hidden");
-            } else {
-                backToTopButton.classList.add("hidden");
-            }
-        };
-
-        backToTopButton.addEventListener("click", function() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-
-        const toggleBtn = document.getElementById('menu-toggle');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        toggleBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-
-
-    </script>
+    <!-- Popup Overlay -->
+    <div id="imagePopup" onclick="closePopup(event)" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 hidden">
+    <div class="relative max-w-4xl w-full px-4">
+        <img id="popupImage" src="" alt="" class="w-full border-4 border-green-600 rounded-lg shadow-lg">
+        <p id="popupTitle" class="text-center text-green-400 mt-2 font-mono"></p>
+    </div>
+    </div>
 </body>
 </html>

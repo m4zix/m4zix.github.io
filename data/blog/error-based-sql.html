@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Error-Based SQL Injection</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="bg-gray-900 text-white p-8 font-mono">
+
+  <header class="flex justify-between items-center p-5 mb-10 border-b border-green-800 sticky top-0 z-50 bg-gray-900 backdrop-blur-sm">
+    <a href="../../index.html"><h1 class="text-3xl font-bold font-mono text-green-400">>_ M4ZiX:~</h1></a>
+  </header>
+
+  <div class="max-w-4xl mx-auto">
+    <h1 class="text-4xl text-green-400 font-bold mb-6">Visible Error-Based SQL Injection</h1>
+    <p class="mb-2 text-sm text-gray-400">Tags: SQLi, Error-Based, Authentication Bypass, Cookies</p>
+    <hr class="my-4 border-green-700">
+
+    <section class="mb-10">
+      <h2 class="text-2xl text-green-300 mb-2">🎯 Goal</h2>
+      <p>Exploit the vulnerable <code>TrackingId</code> cookie to extract usernames and passwords, then log in as <strong>administrator</strong>.</p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-2xl text-green-300 mb-2">🛠️ Walkthrough</h2>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">1. Identify the Injection Point</h3>
+      <p>Intercepted requests revealed a cookie called <code>TrackingId</code> which is directly embedded into SQL queries.</p>
+      <p>Testing with a single quote (<code>'</code>) produced an error — confirming SQL injection.</p>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">2. Trigger Errors for Data Extraction</h3>
+      <p>The query errors out if we inject invalid casts. By forcing type conversion, we can leak data:</p>
+      <pre class="bg-black text-green-400 p-4 rounded-lg overflow-x-auto"><code>TrackingId=' AND Cast((select 1) as int) --</code></pre>
+      <p>This revealed the query expected a boolean, so we wrapped it with <code>1=</code> for validation.</p>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">3. Extract Data via Cast()</h3>
+      <p>We injected queries to retrieve usernames and passwords from the <code>users</code> table:</p>
+      <pre class="bg-black text-green-400 p-4 rounded-lg overflow-x-auto"><code>TrackingId=' AND 1=Cast((select username from users limit 1) as int) --</code></pre>
+      <pre class="bg-black text-green-400 p-4 rounded-lg overflow-x-auto"><code>TrackingId=' AND 1=Cast((select password from users limit 1) as int) --</code></pre>
+      <p>Successfully dumped credentials for the first user (administrator).</p>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">4. Log In</h3>
+      <p>Used the extracted <code>username:password</code> pair to log in as admin → full account compromise ✅</p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-2xl text-yellow-400 mb-2">💡 Lessons Learned</h2>
+      <ul class="list-disc list-inside">
+        <li>Error messages can leak critical information if input isn’t sanitized.</li>
+        <li>Casting techniques can be abused to exfiltrate data via type mismatch errors.</li>
+        <li>Always sanitize and parameterize user input.</li>
+        <li>Avoid exposing database errors to users.</li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>

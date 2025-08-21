@@ -45,19 +45,6 @@ This project was developed using a **prompt-driven black-box approach**:
 
 ---
 
-### 📂 Folder Structure
-
-```
-/assets           → Images, resume, profile photo
-/blog             → Individual walkthroughs (HTML format)
-/viewer.html      → Blog viewer template (loads posts via ?post=)
-/index.html       → Main landing page
-/posts.json       → Blog metadata for dynamic rendering
-/README.md        → You’re reading it now
-```
-
----
-
 ### 📩 Contact Me
 
 Available in the terminal-style contact section or directly:

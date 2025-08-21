@@ -1,0 +1,173 @@
+[
+  {
+    "title": "Username Enumeration via Different Responses",
+    "slug": "viewer.html?post=username-enum",
+    "description": "Detecting subtle error messages to identify valid usernames and brute-force passwords",
+    "tags": "[BURP SUITE] [ENUMERATION]",
+    "color": "bg-red-500",
+    "date": "2025-07-20",
+    "category": "labs"
+  },
+  {
+    "title": "2FA Simple Bypass",
+    "slug": "viewer.html?post=2fa-bypass",
+    "description": "Bypassing two-factor authentication by skipping verification and exploiting session flow",
+    "tags": "[2FA] [IDOR]",
+    "color": "bg-yellow-500",
+    "date": "2025-07-20",
+    "category": "labs"
+  },
+  {
+    "title": "Password Reset Broken Logic",
+    "slug": "viewer.html?post=reset-logic-flaw",
+    "description": "Resetting another user's password by exploiting token misvalidation",
+    "tags": "[LOGIC FLAW] [BURP]",
+    "color": "bg-blue-500",
+    "date": "2025-07-22",
+    "category": "labs"
+  },
+  {
+    "title": "Username Enumeration via Subtly Different Responses",
+    "slug": "viewer.html?post=subtle-response-enum",
+    "description": "Identifying valid usernames by comparing minor differences in error messages",
+    "tags": "[AUTH] [STRING ANALYSIS]",
+    "color": "bg-green-500",
+    "date": "2025-07-22",
+    "category": "labs"
+  },
+  {
+    "title": "Username Enumeration via Response Timing",
+    "slug": "viewer.html?post=response-timing-enum",
+    "description": "Using response delays to identify valid usernames during login attempts",
+    "tags": "[TIMING] [X-FORWARDED-FOR]",
+    "color": "bg-purple-500",
+    "date": "2025-07-25",
+    "category": "labs"
+  },
+  {
+    "title": "PentesterLab Authentication 01–05",
+    "slug": "viewer.html?post=pentester-authentication",
+    "description": "Explore common authentication flaws and how weak implementations can be exploited.",
+    "tags": "[Authentication] [Web Security] [Header Injection] [Session Logic]",
+    "color": "bg-red-500",
+    "date": "2025-07-25",
+    "category": "labs"
+  },
+  {
+    "title": "FFUF Cheatsheet - Fuzz Faster U Fool",
+    "slug": "viewer.html?post=ffuf-cheatsheet",
+    "description": "Master FFUF for directory brute-forcing, VHost detection, parameter fuzzing, and real-world attack scenarios.",
+    "tags": "[Web Fuzzing] [Enumeration] [Burp] [Subdomain Discovery] [Auth Bypass]",
+    "color": "bg-green-500",
+    "date": "2025-07-27",
+    "category": "cheatsheets"
+  },
+  {
+  "title": "PortSwigger Authentication Bypass Labs",
+  "slug": "viewer.html?post=auth-bypass",
+  "description": "A collection of solved PortSwigger labs demonstrating authentication bypass techniques using JWT, OAuth, and HTTP method exploitation",
+  "tags": "[Authentication] [JWT] [OAuth] [HTTP Methods] [Web Security]",
+  "color": "bg-red-500",
+  "date": "2025-08-03",
+  "category": "labs"
+  },
+  {
+  "title": "Visible Error-Based SQL Injection",
+  "slug": "viewer.html?post=error-bassed-sql",
+  "description": "Exploit the vulnerable TrackingId cookie to extract usernames and passwords, then log in as administrator",
+  "tags": "[SQLi] [Error-Based] [Authentication] [Bypass] [Cookies]",
+  "color": "bg-green-500",
+  "date": "2025-08-07",
+  "category": "labs"
+  },
+  {
+  "title": "Brute-forcing a Stay-Logged-In Cookie",
+  "slug": "viewer.html?post=bf_cockie",
+  "description": "Exploit weak stay-logged-in cookies to gain access to Carlos’s account by brute forcing the cookie value.",
+  "tags": "[Authentication] [Cookies] [Brute Force] [MD5] [BurpSuite]",
+  "color": "bg-yellow-500",
+  "date": "2025-08-07",
+  "category": "labs"
+  },
+  {
+  "title": "Blind SQL Injection - Conditional Responses",
+  "slug": "viewer.html?post=bliend-sql",
+  "description": "Exploit the blind SQL injection vulnerability in the TrackingId cookie to extract the administrator's password using conditional responses.",
+  "tags": "[SQLi] [Blind Injection] [Conditional]",
+  "color": "bg-purple-500",
+  "date": "2025-08-07",
+  "category": "labs"
+  },
+  {
+  "title": "Blind SQL Injection - Time Delays",
+  "slug": "viewer.html?post=bliend-sql-time",
+  "description": "Exploit a blind SQL injection by leveraging <code>pg_sleep()</code> to confirm and enumerate the database when no direct output is returned.",
+  "tags": "[SQLi] [Blind Injection] [Time-Bassed]",
+  "color": "bg-red-500",
+  "date": "2025-08-07",
+  "category": "labs"
+  },
+  {
+  "title": "SQL Injection - Determining Number of Columns",
+  "slug": "viewer.html?post=sql-find-columns",
+  "description": "Find out how many columns the query is returning, using a UNION-based SQL injection.",
+  "tags": "[SQLi] [UNION Attack] [Enumeration]",
+  "color": "bg-blue-500",
+  "date": "2025-08-07",
+  "category": "labs"
+  },
+  {
+  "title": "Exploiting XSS to Steal Cookies",
+  "slug": "viewer.html?post=xss_stealing_cockie",
+  "description": "Steal the victim's session cookie using a stored XSS payload and impersonate their account.",
+  "tags": "[XSS] [Stored XSS] [Cookies] [Session Hijacking]",
+  "color": "bg-green-500",
+  "date": "2025-08-08",
+  "category": "labs"
+  },
+  {
+  "title": "DOM XSS in document.write using location.search",
+  "slug": "viewer.html?post=dom_xss",
+  "description": "Exploit a DOM-based XSS vulnerability caused by unsafe usage of document.write with location.search inside a select element.",
+  "tags": "[XSS] [DOM] [document.write] [location.search] [client-side]",
+  "color": "bg-yellow-500",
+  "date": "2025-08-08",
+  "category": "labs"
+  },
+  {
+  "title": "Local File Inclusion - Double Encoding (RootMe)",
+  "slug": "viewer.html?post=lfi",
+  "description": "Bypass filters using double encoding to read sensitive files and extract the hidden flag.",
+  "tags": "[LFI] [Encoding] [RootMe]",
+  "color": "bg-purple-500",
+  "date": "2025-08-08",
+  "category": "labs"
+  },
+  {
+  "title": "Remote File Inclusion (RootMe)",
+  "slug": "viewer.html?post=rfi",
+  "description": "Exploit a remote file inclusion vulnerability to read PHP source code and extract the hidden flag.",
+  "tags": "[RFI] [PHP] [Source Code] [Flag] [RootMe]",
+  "color": "bg-red-500",
+  "date": "2025-08-08",
+  "category": "labs"
+  },
+  {
+  "title": "HTTP Request Smuggling - CL.TE",
+  "slug": "viewer.html?post=cl-te-req-smug",
+  "description": "Confirm and exploit a CL.TE (Content-Length + Transfer-Encoding) vulnerability by crafting conflicting HTTP requests to manipulate backend processing.",
+  "tags": "[HTTP] [Smuggling] [CL.TE] [Web Security]",
+  "color": "bg-blue-500",
+  "date": "2025-08-09",
+  "category": "labs"
+  },
+  {
+  "title": "HTTP Request Smuggling - TE.CL",
+  "slug": "viewer.html?post=te-cl-req-smug",
+  "description": "Confirm a TE.CL HTTP request smuggling vulnerability via differential responses and deliver a smuggled request.",
+  "tags": "[HTTP] [Smuggling] [TE.CL] [Security Testing]",
+  "color": "bg-green-500",
+  "date": "2025-08-09",
+  "category": "labs"
+  }
+]

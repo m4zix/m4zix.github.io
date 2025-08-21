@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brute-forcing a Stay-Logged-In Cookie</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="bg-gray-900 text-white p-8 font-mono">
+
+    <header class="flex justify-between items-center p-5 mb-10 border-b border-green-800 sticky top-0 z-50 bg-gray-900 backdrop-blur-sm">
+        <a href="../../index.html"><h1 class="text-3xl font-bold font-mono text-green-400">>_ M4ZiX:~</h1></a>
+    </header>
+
+  <div class="max-w-4xl mx-auto">
+    <h1 class="text-4xl text-green-400 font-bold mb-6">Brute-forcing a Stay-Logged-In Cookie</h1>
+    <p class="mb-2 text-sm text-gray-400">Tags: Authentication, Cookies, Brute Force, MD5, BurpSuite</p>
+    <hr class="my-4 border-green-700">
+
+    <section class="mb-10">
+      <h2 class="text-2xl text-green-300 mb-2">🎯 Goal</h2>
+      <p>Exploit weak stay-logged-in cookies to gain access to Carlos’s account by brute forcing the cookie value.</p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-2xl text-green-300 mb-2">🛠️ Walkthrough</h2>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">1. Capturing the Cookie</h3>
+      <p>After enabling “Stay logged in”, the request contained <code>2 tokens</code>: one looked random, the other was Base64 encoded. The encoded one was sent to Burp Decoder.</p>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">2. Analyzing the Token</h3>
+      <p>Decoded value looked like <code>username:password</code>, but the password part was hashed. Its length was 32 chars, suggesting <strong>MD5 hash</strong>.</p>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">3. Preparing the Attack</h3>
+      <p>Configured Burp Intruder to brute force the MD5 hash of Carlos’s password using the provided wordlist.</p>
+      <ul class="list-disc list-inside ml-4 text-gray-300">
+        <li>Payload: Carlos’s password candidates</li>
+        <li>Rules: <code>Add Prefix 'carlos:' → Hash MD5 → Base64 encode</code></li>
+        <li>Injected into the cookie parameter</li>
+      </ul>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">4. Running the Attack</h3>
+      <p>Sorted the responses by status code. Found one request returning <code>200 OK</code>. This indicated the valid token for Carlos’s session.</p>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">5. Lab Solved</h3>
+      <p>Successfully brute forced Carlos’s stay-logged-in cookie and gained access to his account ✅</p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-2xl text-yellow-400 mb-2">💡 Lessons Learned</h2>
+      <ul class="list-disc list-inside">
+        <li>Never store static hashes (like MD5) in cookies.</li>
+        <li>Stay-logged-in functionality must use strong, random, server-side validated tokens.</li>
+        <li>Burp Suite Intruder with transformations (MD5 + Base64) is powerful for automating attacks.</li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blind SQLi - Conditional Responses</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="bg-gray-900 text-white p-8 font-mono">
+
+  <header class="flex justify-between items-center p-5 mb-10 border-b border-green-800 sticky top-0 z-50 bg-gray-900 backdrop-blur-sm">
+    <a href="../../index.html"><h1 class="text-3xl font-bold font-mono text-green-400">>_ M4ZiX:~</h1></a>
+  </header>
+
+  <div class="max-w-4xl mx-auto">
+    <h1 class="text-4xl text-green-400 font-bold mb-6">Blind SQL Injection - Conditional Responses</h1>
+    <p class="mb-2 text-sm text-gray-400">Tags: SQLi, Blind Injection, Conditional</p>
+    <hr class="my-4 border-green-700">
+
+    <section class="mb-10">
+      <h2 class="text-2xl text-green-300 mb-2">🎯 Goal</h2>
+      <p>Exploit the blind SQL injection vulnerability in the <code>TrackingId</code> cookie to extract the administrator's password using conditional responses.</p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-2xl text-green-300 mb-2">🛠️ Walkthrough</h2>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">1. Detecting the Injection Point</h3>
+      <ul class="list-disc list-inside space-y-2">
+        <li>Intercepted the request in Burp Suite.</li>
+        <li>Modified <code>TrackingId</code> to an invalid value → noticed the message <span class="text-yellow-400">"Welcome back!"</span> disappeared.</li>
+        <li>Confirmed application behavior depends on SQL query result → potential blind SQLi.</li>
+      </ul>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">2. Testing the Payload</h3>
+      <p>Injected a condition to verify SQL execution:</p>
+      <pre class="bg-black text-green-400 p-4 rounded-lg overflow-x-auto"><code>' AND (SELECT 1 FROM users LIMIT 1)='1</code></pre>
+      <p>Query executes successfully → vulnerability confirmed.</p>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">3. Finding Password Length</h3>
+      <p>Used a conditional payload to check password length of <code>administrator</code>:</p>
+      <pre class="bg-black text-green-400 p-4 rounded-lg overflow-x-auto"><code>' AND (SELECT 1 FROM users 
+WHERE username='administrator' 
+AND LENGTH(password) > 19)='1</code></pre>
+      <p>Response confirmed password length = <span class="text-yellow-400">20 characters</span>.</p>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">4. Extracting Password Characters</h3>
+      <p>Used <code>SUBSTRING()</code> to guess each character:</p>
+      <pre class="bg-black text-green-400 p-4 rounded-lg overflow-x-auto"><code>' AND (SELECT SUBSTRING(password,1,1) 
+FROM users WHERE username='administrator')='a</code></pre>
+      <p>Sent payloads to Intruder:</p>
+      <ul class="list-disc list-inside space-y-1">
+        <li><strong>Payload 1:</strong> Position (1 → 20)</li>
+        <li><strong>Payload 2:</strong> Characters (a-z, 0-9, symbols)</li>
+        <li>Configured Grep - Match with keyword <span class="text-yellow-400">"Welcome"</span> to detect correct guesses.</li>
+      </ul>
+      <p>Slowly extracted the full administrator password.</p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-2xl text-yellow-400 mb-2">💡 Lessons Learned</h2>
+      <ul class="list-disc list-inside">
+        <li>Blind SQLi relies on application behavior changes (not error messages).</li>
+        <li><code>LENGTH()</code> helps determine size of sensitive fields.</li>
+        <li><code>SUBSTRING()</code> allows extraction of data character by character.</li>
+        <li>Automation with Intruder speeds up brute-forcing the password.</li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>

@@ -1,0 +1,87 @@
+[
+  {
+    "title": "Building Web Applications using PHP & MySQL",
+    "description": "Completed a 3 hour course covering Building Apps with PHP & MySQL",
+    "date": "2022-10-15",
+    "image": "./assets/certificates/php_mysql.png",
+    "category": "other"
+  },
+  {
+    "title": "Web Development Challenger Track",
+    "description": "Completed a 30+ hour course Frontend Web Development.",
+    "date": "2022-11-01",
+    "image": "./assets/certificates/MCIT.png",
+    "category": "other"
+  },
+  {
+    "title": "Web Development with HTML, CSS, JavaScript",
+    "description": "Completed a 20+ hour course covering HTML, CSS, JavaScript",
+    "date": "2022-11-24",
+    "image": "./assets/certificates/Web_IBM.png",
+    "category": "other"
+  },
+  {
+    "title": "Computer Network Fundamentals",
+    "description": "Completed a 1 hour course covering core concepts of computer networking.",
+    "date": "2023-03-17",
+    "image": "./assets/certificates/Course_Certificate_En.jpg",
+    "category": "security"
+  },
+  {
+    "title": "Introduction to Network Security",
+    "description": "Completed a 1 hour 15 minute course introducing key principles of network security.",
+    "date": "2023-03-18",
+    "image": "./assets/certificates/Attendance_Certificate.jpg",
+    "category": "security"
+  },
+  {
+    "title": "Effective Presentations",
+    "description": "Completed a course about how to deliver a persuasive presentation.",
+    "date": "2024-07-18",
+    "image": "./assets/certificates/EP.png",
+    "category": "soft"
+  },
+  {
+    "title": "Bussiness Communications",
+    "description": "Completed a course about how to use communicatoin channels to convey messages effectively",
+    "date": "2024-07-29",
+    "image": "./assets/certificates/BC.png",
+    "category": "soft"
+  },
+  {
+    "title": "Advanced Flutter Course Internship",
+    "description": "Completed a 60+ hour course Advanced Flutter Course.",
+    "date": "2024-08-01",
+    "image": "./assets/certificates/Flutter.png",
+    "category": "other"
+  },
+  {
+    "title": "Ethical Hacking Using Social Engineering",
+    "description": "Completed a 16 hour course covering social engineering techniques",
+    "date": "2024-08-04",
+    "image": "./assets/certificates/EH_SE.png",
+    "category": "security"
+  },
+  {
+    "title": "Ethical Hacking",
+    "description": "Completed a 3 hour 29 minute course covering ethical hacking techniques.",
+    "date": "2024-08-18",
+    "image": "./assets/certificates/EthicalHacking.jpg",
+    "category": "security"
+  },
+  {
+    "title": "Python Programming Basics",
+    "description": "Completed a 2 hour course covering Python Programming Basics",
+    "date": "2024-11-16",
+    "image": "./assets/certificates/Python.png",
+    "category": "security"
+  },
+  {
+    "title": "Web Application Pen Tester",
+    "description": "Completed a 4 hour course Web Application Pentesting",
+    "date": "2025-08-09",
+    "image": "./assets/certificates/WAPT.png",
+    "category": "security"
+  }
+  
+]

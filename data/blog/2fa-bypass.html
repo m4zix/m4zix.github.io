@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2FA Simple Bypass</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="bg-gray-900 text-white p-8 font-mono">
+
+    <header class="flex justify-between items-center p-5 mb-10 border-b border-green-800 sticky top-0 z-50 bg-gray-900 backdrop-blur-sm">
+        <a href="../../index.html"><h1 class="text-3xl font-bold font-mono text-green-400">>_ M4ZiX:~</h1></a>
+    </header>
+
+  <div class="max-w-4xl mx-auto">
+    <h1 class="text-4xl text-green-400 font-bold mb-6">2FA Simple Bypass</h1>
+    <p class="mb-2 text-sm text-gray-400">Tags: 2FA, IDOR, session flow, authentication</p>
+    <hr class="my-4 border-green-700">
+
+    <section class="mb-10">
+      <h2 class="text-2xl text-green-300 mb-2">🎯 Goal</h2>
+      <p>Access a user's protected page without the 2FA verification code.</p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-2xl text-green-300 mb-2">🛠️ Walkthrough</h2>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">1. Understand the Flow</h3>
+      <p>Logged in with our own account. After entering credentials, the site asked for a 2FA code. Accessing the email inbox revealed the correct code and allowed login.</p>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">2. Post-login Redirect</h3>
+      <p>After successful login, the user was redirected to <code>/my-account?id=wiener</code>.</p>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">3. Testing IDOR</h3>
+      <p>Changed <code>?id=wiener</code> to <code>?id=carlos</code>. Redirected to login page — the site uses authorization checks to prevent IDOR.</p>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">4. Try Reusing 2FA</h3>
+      <p>Tried reusing the same 2FA code for Carlos's account — failed. Then attempted to skip 2FA by directly accessing <code>/my-account?id=carlos</code> after authentication — success!</p>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">5. Lab Solved</h3>
+      <p>Successfully accessed Carlos's account page by bypassing 2FA redirect logic. Mission complete ✅</p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-2xl text-yellow-400 mb-2">💡 Lessons Learned</h2>
+      <ul class="list-disc list-inside">
+        <li>Post-login redirects must be protected — not just the login itself.</li>
+        <li>Always validate session flow on sensitive pages.</li>
+        <li>2FA logic can be bypassed if session controls are weak.</li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>

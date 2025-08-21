@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTTP Request Smuggling - CL.TE Vulnerability</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="bg-gray-900 text-white p-8 font-mono">
+
+  <header class="flex justify-between items-center p-5 mb-10 border-b border-green-800 sticky top-0 z-50 bg-gray-900 backdrop-blur-sm">
+    <a href="../../index.html"><h1 class="text-3xl font-bold font-mono text-green-400">>_ M4ZiX:~</h1></a>
+  </header>
+
+  <div class="max-w-4xl mx-auto">
+    <h1 class="text-4xl text-green-400 font-bold mb-6">HTTP Request Smuggling - CL.TE</h1>
+    <p class="mb-2 text-sm text-gray-400">Tags: HTTP, Smuggling, CL.TE, Web Security</p>
+    <hr class="my-4 border-green-700">
+
+    <section class="mb-10">
+      <h2 class="text-2xl text-green-300 mb-2">🎯 Goal</h2>
+      <p>Confirm and exploit a <code>CL.TE</code> (Content-Length + Transfer-Encoding) vulnerability by crafting conflicting HTTP requests to manipulate backend processing.</p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-2xl text-green-300 mb-2">🛠️ Walkthrough</h2>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">1. Determine Backend Header Handling</h3>
+      <p>Send requests with both <code>Content-Length</code> and <code>Transfer-Encoding</code> headers using <code>HTTP/1.1</code>:</p>
+      <ul class="list-disc pl-6 space-y-1">
+        <li>Incorrect large length + correct body → If CL.TE → frontend throws <code>400 Bad Request</code>.</li>
+        <li>Incorrect large length + correct body → If TE.CL → backend throws <code>500 Timed Out</code>.</li>
+      </ul>
+      <p>Observed: frontend uses <code>CL</code>, backend parses <code>TE</code> → confirmed <strong>CL.TE</strong> vulnerability.</p>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">2. Prepare Smuggling Payload</h3>
+      <p>Craft the request to sneak in another HTTP request behind the frontend:</p>
+      <pre class="bg-black text-green-400 p-4 rounded-lg overflow-x-auto"><code>POST / HTTP/1.1
+Host: target.com
+Content-Length: 36
+Transfer-Encoding: chunked
+
+0
+
+GET /404s HTTP/1.1
+X-Ignore: X</code></pre>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">3. Exploit</h3>
+      <p>Send a normal request after the smuggled request:</p>
+      <p>The backend interprets it as part of the previous smuggled request → corrupted processing → we can manipulate responses, bypass filters, or access hidden endpoints.</p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-2xl text-yellow-400 mb-2">💡 Lessons Learned</h2>
+      <ul class="list-disc list-inside">
+        <li>CL.TE request smuggling occurs when frontend and backend parse headers differently.</li>
+        <li>Use careful differential testing to confirm the type of smuggling vulnerability.</li>
+        <li>Exploiting this can bypass security controls, poison caches, or access internal resources.</li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL Injection - Finding Number of Columns</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../styles.css">
+</head>
+<body class="bg-gray-900 text-white p-8 font-mono">
+
+  <header class="flex justify-between items-center p-5 mb-10 border-b border-green-800 sticky top-0 z-50 bg-gray-900 backdrop-blur-sm">
+    <a href="../../index.html"><h1 class="text-3xl font-bold font-mono text-green-400">>_ M4ZiX:~</h1></a>
+  </header>
+
+  <div class="max-w-4xl mx-auto">
+    <h1 class="text-4xl text-green-400 font-bold mb-6">SQL Injection - Determining Number of Columns</h1>
+    <p class="mb-2 text-sm text-gray-400">Tags: SQLi, UNION Attack, Enumeration</p>
+    <hr class="my-4 border-green-700">
+
+    <section class="mb-10">
+      <h2 class="text-2xl text-green-300 mb-2">🎯 Goal</h2>
+      <p>Find out how many columns the query is returning, using a <strong>UNION-based SQL injection</strong>.</p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="text-2xl text-green-300 mb-2">🛠️ Walkthrough</h2>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">1. Analyze the Request</h3>
+      <p>Using Burp Suite, mapped the application and identified the <code>category</code> parameter in the product filter request as injectable.</p>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">2. Start Testing with UNION</h3>
+      <p>Sent the request to Repeater and tried injecting payloads:</p>
+      <pre class="bg-black text-green-400 p-4 rounded-lg overflow-x-auto"><code>' UNION SELECT NULL--</code></pre>
+      <p>If the response throws an internal server error, it means the number of <code>NULL</code> values doesn’t match the query columns.</p>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">3. Increment Columns</h3>
+      <p>Repeated the test by increasing the number of <code>NULL</code> placeholders until a valid response appeared:</p>
+      <pre class="bg-black text-green-400 p-4 rounded-lg overflow-x-auto"><code>' UNION SELECT NULL,NULL,NULL--</code></pre>
+      <p>The successful payload reveals the correct column count (in this case, 3).</p>
+
+      <h3 class="text-xl text-green-200 mt-6 mb-2">4. Key Point</h3>
+      <p>The number of <code>NULL</code> values that works = number of columns in the original query.</p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-2xl text-yellow-400 mb-2">💡 Lessons Learned</h2>
+      <ul class="list-disc list-inside">
+        <li>UNION requires both queries to return the same number of columns.</li>
+        <li><code>NULL</code> is used since it’s compatible with any data type.</li>
+        <li>Always comment out the rest of the original query using <code>--</code>.</li>
+        <li>This step is the foundation for extracting data in later SQLi attacks.</li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>
